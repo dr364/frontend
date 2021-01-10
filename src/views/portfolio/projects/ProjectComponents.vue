@@ -118,11 +118,9 @@
             sortable: false,
             formatter(value, row, index) {
               if (Object.prototype.hasOwnProperty.call(row, "resolvedLicense")) {
-                console.log("Resolved license: " + row.resolvedLicense.licenseId);
                 let licenseurl = "../licenses/" + row.resolvedLicense.licenseId;
                 return "<a href=\"" + licenseurl + "\">" + xssFilters.inHTMLData(row.resolvedLicense.licenseId) + "</a>";
               } else {
-                console.log("Unresolved license: " + common.valueWithDefault(value, ""));
                 return xssFilters.inHTMLData(common.valueWithDefault(value, ""));
               }
             }
