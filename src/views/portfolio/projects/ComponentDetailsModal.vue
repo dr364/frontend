@@ -145,6 +145,9 @@
     beforeMount() {
       this.retrieveLicenses();
     },
+    created() {
+      console.log(JSON.stringify(this.$component));
+    },
     beforeUpdate() {
       //console.log(this.component);
     },
@@ -191,12 +194,17 @@
       },
       retrieveLicenses: function() {
         let url = `${this.$api.BASE_URL}/${this.$api.URL_LICENSE_CONCISE}`;
+        
+        if (Object.prototype.hasOwnProperty.call(this.component, "resolvedLicense")) {
+          console.log("Resolved License: " + this.component.resolvedLicense.licenseId);
+        }
         this.axios.get(url).then((response) => {
           for (let i = 0; i < response.data.length; i++) {
             let license = response.data[i];
             this.selectableLicenses.push({value: license.licenseId, text: license.name});
             if (this.component.resolvedLicense && this.component.resolvedLicense.uuid === license.uuid ) {
               this.selectedLicense = license.licenseId;
+              console.log("Selected License: " + license.licenseId);
             }
           }
         }).catch((error) => {
